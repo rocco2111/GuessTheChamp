@@ -1,0 +1,558 @@
+/* ============ Base ============ */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, #eaf4ff 0%, #d7ebff 55%, #c4e0ff 100%);
+}
+
+/* Page wrapper: centers content under the fixed topline */
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 48px; /* Standard (Quiz ohne Topline) */
+}
+
+
+.page.home {
+  padding-top: 96px; /* Platz für Topline NUR auf Home */
+}
+
+/* ============ Topline ============ */
+.topline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.top-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+
+/* ============ Home ============ */
+.homewrap {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.home-btn {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+}
+
+.home-btn:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 0.25),
+    transparent
+  );
+}
+
+.news-placeholder {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+
+/* ============ Quiz ============ */
+.quizcol {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.champbox {
+  width: 280px;
+  height: 190px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 115px; /* wichtig: Abstand zu den Antworten */
+}
+
+/* Champion image */
+.champimg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 22px;
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+  z-index: 2;
+}
+
+.champimg.zoomed {
+  transform: scale(1.18);
+  cursor: zoom-out;
+}
+
+/* Answer pill */
+.answerbox {
+  width: 320px;
+  border: none;
+  border-radius: 999px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow: hidden;
+
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.answerbox:hover { background: rgba(255, 255, 255, 0.92); }
+.answerbox:active { transform: scale(0.99); }
+
+.answerbox:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+/* Left badge (A/B/C) */
+.answerbox .badge {
+  width: 64px;
+  height: 56px;
+  margin: 8px;
+  border-radius: 30px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 700;
+
+  /* super dezent */
+  background: rgba(255,255,255,0.70);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.answerbox .text {
+  flex: 1;
+  font-size: 20px;
+  padding-right: 18px;
+  padding-left: 2px;
+  text-align: left;
+}
+
+/* Right/Wrong state */
+.answerbox.correct { background: #d4f8d4; }
+.answerbox.wrong   { background: #ffd6d6; }
+
+.answerbox.correct .badge,
+.answerbox.wrong .badge {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+/* Actions unter dem Quiz */
+.quiz-actions {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;   /* mittig */
+  gap: 24px;
+}
+
+.quiz-btn {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+}
+
+.quiz-btn:hover {
+  text-decoration: underline;
+}
+
+/* Bubble-Buttons (Home / Finish) */
+.action-bubble {
+  min-width: 96px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  text-align: center;
+
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+
+  /* dezent, passend zu den Answer-Bubbles */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(6px);
+
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.action-bubble:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.action-bubble:active {
+  transform: scale(0.97);
+}
+
+/* Home-spezifisches Padding wegen Topline */
+.page.home {
+  padding-top: 96px;
+}
+
+/* Home wrapper */
+.homewrap {
+  width: min(980px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+/* 3 Buttons in einer Reihe */
+.home-menu {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Bubble-Buttons (wie dein Bild 2) */
+.menu-bubble {
+  width: 100%;
+  max-width: 260px;     /* ← das ist der Schlüssel */
+  height: 64px;
+
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(6px);
+
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.menu-bubble:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.menu-bubble:active {
+  transform: scale(0.98);
+}
+
+/* mobile: untereinander */
+@media (max-width: 720px) {
+  .home-menu {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Wrapper für Button + Tooltip */
+.menu-item {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  top: calc(100% + 10px); /* IMMER unter dem Button */
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 220px;
+  padding: 10px 14px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+/* Anzeigen beim Hover */
+.menu-item:hover .tooltip {
+  opacity: 1;
+
+}
+
+/* --- Competition Popup Overlay (HOME) --- */
+.popup[hidden] {
+  display: none !important;
+}
+
+.popup {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: rgba(0, 0, 0, 0.12) !important;
+  backdrop-filter: blur(2px) !important;
+
+  z-index: 9999 !important;
+}
+
+.popup-card {
+  width: min(420px, 90vw) !important;
+  border-radius: 22px !important;
+  padding: 18px 18px 14px 18px !important;
+
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(10px) !important;
+
+  text-align: center !important;
+}
+
+.popup-title {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  margin-bottom: 8px !important;
+  color: #000 !important;
+}
+
+.popup-text {
+  font-size: 14px !important;
+  color: rgba(0, 0, 0, 0.70) !important;
+  line-height: 1.35 !important;
+  margin-bottom: 14px !important;
+}
+
+.popup-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+}
+
+.popup-pill {
+  height: 48px !important;
+  border-radius: 999px !important;
+  display: grid !important;
+  place-items: center !important;
+
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+
+  background: rgba(255, 255, 255, 0.70) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+
+  transition: background 0.15s ease, transform 0.1s ease !important;
+}
+
+.popup-pill:hover { background: rgba(255, 255, 255, 0.92) !important; }
+.popup-pill:active { transform: scale(0.99) !important; }
+
+.popup-close {
+  border: none !important;
+  background: none !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.popup-close:hover { text-decoration: underline !important; }
+
+.menu-btn {
+  background: rgba(255, 255, 255, 0.65);
+  border: none;
+}
+
+.hud {
+  width: 320px;
+  text-align: center;
+  font-weight: 700;
+  color: rgba(0,0,0,0.75);
+  margin-bottom: 10px;
+}
+
+/* Bottom bar: left (Home) | center (Finish) | right (Progress) */
+.bottom-bar {
+  width: 320px;
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+
+.bottom-left  { justify-self: start; }
+.bottom-mid   { justify-self: center; }
+.bottom-right { justify-self: end; }
+
+.action-bubble {
+  min-width: 96px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(6px);
+
+  border: none;          /* FIX: kein schwarzer Rand */
+  outline: none;
+  box-shadow: none;
+
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.action-bubble:hover { background: rgba(255, 255, 255, 0.85); }
+.action-bubble:active { transform: scale(0.97); }
+
+
+.progress-badge {
+  margin-bottom: 15px;   /* Abstand zum Bild */
+  padding: 6px 18px;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 800;
+  color: #000;
+
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(6px);
+
+  text-align: center;
+}
+
+
+/* Impressum */
+.impressum-wrap {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.impressum-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #000;
+  text-align: center;
+}
+
+.impressum-card {
+  width: 100%;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(6px);
+  border-radius: 22px;
+  padding: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(0,0,0,0.85);
+}
+
+.impressum-wrap .action-bubble {
+  margin-top: 50px;
+}
+
+.champimg.loading {
+  position: relative;
+}
+
+.champimg.loading::after {
+  content: "Loading…";
+  position: absolute;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 22px;
+
+  z-index: 2;
+}
+
+#newsBox {
+  width: 100%;
+  max-height: 260px;      /* <-- Höhe der News-Box */
+  overflow-y: auto;       /* <-- scroll */
+  padding-right: 6px;     /* Platz für scrollbar */
+}
+
+/* optional: scrollbar nicer (Chrome/Edge) */
+#newsBox::-webkit-scrollbar {
+  width: 8px;
+}
+#newsBox::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 999px;
+}
+
+.news-item {
+  display: block;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+
+  border-radius: 18px;
+  text-decoration: none;
+  color: #000;
+
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(6px);
+}
+
+.news-item span {
+  font-size: 13px;
+  color: rgba(0,0,0,0.6);
+}

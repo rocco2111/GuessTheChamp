@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block title %}Impressum – Guess the Champ{% endblock %}
+
+{% block body %}
+
+<div class="page">
+  <div class="impressum-wrap">
+
+    <h1 class="impressum-title">Impressum</h1>
+
+    <div class="impressum-card">
+      <p><strong>Angaben gemäß § 5 TMG</strong></p>
+
+      <p>
+        Rocco Kampfmeier<br>
+        Rohrhammerweg 6<br>
+        99610 Sömmerda<br>
+        Deutschland
+      </p>
+
+      <p>
+        <strong>Kontakt</strong><br>
+        E-Mail: phillip.kampfmeier@gmx.net
+      </p>
+
+      <p>
+        <strong>Haftung für Inhalte</strong><br>
+        Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt.
+        Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte
+        können wir jedoch keine Gewähr übernehmen.
+      </p>
+
+      <p>
+        <strong>Haftung für Links</strong><br>
+        Unser Angebot enthält Links zu externen Websites Dritter,
+        auf deren Inhalte wir keinen Einfluss haben.
+      </p>
+    </div>
+
+    <a href="{{ url_for('index') }}" class="action-bubble">Back to Home</a>
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+

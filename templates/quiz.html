@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block title %}Quiz – Guess the Champ{% endblock %}
+
+{% block body %}
+<div class="page">
+  <div class="quizcol">
+    {% if mode == "competition" %}
+    <div id="progressBadge" class="progress-badge"></div>
+  {% endif %}
+    <div class="champbox">
+
+  <img id="champImg" class="champimg" alt="">
+</div>
+
+    <button class="answerbox" id="a1"><span class="badge">A</span><span class="text"></span></button>
+    <button class="answerbox" id="a2"><span class="badge">B</span><span class="text"></span></button>
+    <button class="answerbox" id="a3"><span class="badge">C</span><span class="text"></span></button>
+
+<div class="bottom-bar">
+  <a href="{{ url_for('index') }}" class="action-bubble">Home</a>
+
+  {% if mode == "competition" %}
+    <button id="finishBtn" class="action-bubble" type="button">Finish</button>
+  {% endif %}
+</div>
+
+
+    </div>
+
+    {% if mode == "competition" %}
+<div class="popup" id="finishPopup" hidden>
+  <div class="popup-card">
+
+    <!-- STEP 1: confirm -->
+    <div id="finishStepConfirm">
+      <div class="popup-title">Finish?</div>
+      <div class="popup-text">
+        You can finish anytime.<br>
+        Your final score will be shown.
+      </div>
+
+      <div class="popup-actions">
+        <button class="popup-pill" id="confirmFinish" type="button">Finish now</button>
+        <button class="popup-close" id="closeFinish" type="button">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: result -->
+    <div id="finishStepResult" hidden>
+      <div class="popup-title">Result</div>
+      <div class="popup-text" id="resultText">0 / 0</div>
+
+      <div class="popup-actions">
+        <a class="popup-pill" href="{{ url_for('index') }}">Back to Home</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='quiz.js') }}"></script>
+{% endblock %}

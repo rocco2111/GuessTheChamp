@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+{% block title %}Home – Guess the Champ{% endblock %}
+
+{% block body %}
+
+<!-- Topline nur auf Home -->
+<div class="topline">
+  <div class="top-title">Guess the Champ and prove your knowledge</div>
+</div>
+
+<div class="page home">
+  <div class="homewrap">
+
+    <div class="home-menu">
+
+      <!-- Freestyle -->
+      <div class="menu-item">
+        <a class="menu-bubble" href="{{ url_for('quiz', mode='freestyle') }}">Freestyle</a>
+        <div class="tooltip">
+          Play freely without scoring.<br>
+          Just guess and have fun.
+        </div>
+      </div>
+
+      <!-- Competition (öffnet Popup) -->
+      <div class="menu-item">
+        <button class="menu-bubble menu-btn" id="openComp" type="button">Competition</button>
+        <div class="tooltip">
+          Answer a fixed number of questions.<br>
+          Your correct answers are counted.
+        </div>
+
+        <!-- Popup -->
+        <div class="popup" id="compPopup" hidden>
+          <div class="popup-card">
+            <div class="popup-title">Competition</div>
+            <div class="popup-text">
+              Choose how many questions you want.<br>
+              You can finish anytime.
+            </div>
+
+            <div class="popup-actions">
+              <a class="popup-pill" href="{{ url_for('quiz', mode='competition', count=10) }}">10 questions</a>
+              <a class="popup-pill" href="{{ url_for('quiz', mode='competition', count=20) }}">20 questions</a>
+              <a class="popup-pill" href="{{ url_for('quiz', mode='competition', count=50) }}">50 questions</a>
+            </div>
+
+            <button class="popup-close" id="closeComp" type="button">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Impressum -->
+      <div class="menu-item">
+        <a class="menu-bubble" href="{{ url_for('impressum') }}">Impressum</a>
+        <div class="tooltip">
+          Legal information about this project.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="newsBox" class="news-placeholder">
+        <p>Loading LoL News…</p>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const openBtn = document.getElementById("openComp");
+  const closeBtn = document.getElementById("closeComp");
+  const popup = document.getElementById("compPopup");
+
+  if (openBtn && closeBtn && popup) {
+    openBtn.addEventListener("click", () => popup.hidden = false);
+    closeBtn.addEventListener("click", () => popup.hidden = true);
+
+    popup.addEventListener("click", (e) => {
+      if (e.target === popup) popup.hidden = true;
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !popup.hidden) popup.hidden = true;
+    });
+  }
+</script>
+
+<script>
+  async function loadNews() {
+    const box = document.getElementById("newsBox");
+    if (!box) return;
+
+    try {
+      const res = await fetch("/api/news");
+      const news = await res.json();
+
+      if (!Array.isArray(news) || news.length === 0) {
+  box.innerHTML = "<p>No news found. Try again later.</p>";
+  return;
+}
+
+      box.innerHTML = news.map(n => `
+        <a class="news-item" href="${n.link}" target="_blank" rel="noopener">
+          <strong>${n.title}</strong><br>
+          <span>${n.date}</span>
+        </a>
+      `).join("");
+    } catch (err) {
+      box.innerHTML = "<p>Failed to load news.</p>";
+    }
+  }
+
+  loadNews();
+</script>
+
+
+{% endblock %}
